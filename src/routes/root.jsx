@@ -60,7 +60,10 @@ function Root() {
     console.log("running");
     await delay(2000);
     if (location.state?.error) {
-      navigate("/", { state: { ...location.state, error: false } });
+      navigate("/", {
+        state: { ...location.state, error: false },
+        replace: true,
+      });
       navigate("/bills", {
         state: { bills: resolvedErrorBills },
       });

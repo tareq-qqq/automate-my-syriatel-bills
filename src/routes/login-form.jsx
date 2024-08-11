@@ -68,7 +68,7 @@ function LoginForm() {
                   تسجيل الدخول
                 </h1>
               </CardTitle>
-              <HoverCard>
+              <HoverCard openDelay={100} closeDelay={100}>
                 {/* <HoverCardTrigger className="absolute left-6 top-6" asChild>
                   <Button
                     variant={"ghost"}
@@ -82,7 +82,7 @@ function LoginForm() {
                 </HoverCardTrigger>
                 <HoverCardContent
                   dir="ltr"
-                  className="grid max-w-sm justify-between gap-y-4  p-8 [grid-template-columns:auto_auto]"
+                  className="grid max-w-sm justify-between gap-y-4  bg-secondary p-8 [grid-template-columns:auto_auto]"
                 >
                   <span className="font-medium tracking-wide">Username</span>
                   <span className="italic">admin</span>

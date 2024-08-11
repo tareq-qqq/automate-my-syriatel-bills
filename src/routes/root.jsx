@@ -24,6 +24,9 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
+import delay from "../utils/delay";
+import { mockup, resolvedErrorBills } from "../utils/mockup-data";
+import defaultValues from "../utils/default-values";
 
 function Root() {
   const navigate = useNavigate();
@@ -42,62 +45,28 @@ function Root() {
   // In case of redirection from the the bills-table component with error bills
   // populate the textarea with the error bills billingNos and subscriptionNos
   function getDefaultValue() {
-    const errorBills = location.state?.errorBills;
+    const errorBills = location.state?.error ? location.state.errorBills : null;
     if (errorBills && errorBills.length > 0) {
       const text = errorBills
         .map(
           ({ billingNo, subscriptionNo }) => `${billingNo} ${subscriptionNo}`,
         )
         .join("\n");
-      console.log(text);
       return text;
     }
-    return "";
+    return defaultValues;
   }
   async function onSubmit({ billingAndSubscriptionNumbers, city }) {
-    // The user must be logged in to access the root page
-    // because if they're not logged in they won't have this cookie
-    console.log(billingAndSubscriptionNumbers);
-    console.log(city);
-    const userId = Cookies.get("userId");
-
-    try {
-      const res = await fetch("http://localhost:3000/bills", {
-        method: "post",
-        body: JSON.stringify({ billingAndSubscriptionNumbers, city }),
-        headers: {
-          "content-type": "application/json",
-          userId: userId,
-        },
+    console.log("running");
+    await delay(2000);
+    if (location.state?.error) {
+      navigate("/", { state: { ...location.state, error: false } });
+      navigate("/bills", {
+        state: { bills: resolvedErrorBills },
       });
-
-      if (res.status === 401) {
-        // display something like session ended
-        // maybe display a modal somehow and when that's clicked navigate to the login now just the login will do
-        console.log("couldn't find the uuid you provided on the server");
-        Cookies.remove("userId");
-        alert("انتهت مدة الجلسة");
-        navigate("/login");
-      } else if (res.ok) {
-        const json = await res.json();
-        console.log(json);
-        navigate("/bills", {
-          state: {
-            bills: json,
-          },
-        });
-      } else if (res.status === 500) {
-        const json = await res.json();
-        form.setError("root.serverError", {
-          message: json.message,
-        });
-      }
-      // put a error server is down
-    } catch (error) {
-      form.setError("root.serverError", {
-        message:
-          "حدث خطأ ما، غير قادر على الوصول الى السيرفر اعد المحاولة لاحقا",
-      });
+    } else {
+      console.log("navigating with data");
+      navigate("/bills", { state: { bills: mockup } });
     }
   }
 

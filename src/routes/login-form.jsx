@@ -29,8 +29,8 @@ import delay from "../utils/delay";
 function LoginForm() {
   const form = useForm({
     defaultValues: {
-      username: "",
-      password: "",
+      username: "admin",
+      password: "admin123",
     },
     mode: "onChange",
     resolver: zodResolver(loginFormSchema),

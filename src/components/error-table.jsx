@@ -35,7 +35,7 @@ function ErrorTable({ errorBills }) {
         </Table>
         <Button
           className="w-full"
-          onClick={() => navigate("/", { state: { errorBills } })}
+          onClick={() => navigate("/", { state: { errorBills, error: true } })}
         >
           إجراء بحث على هذه الفواتير
         </Button>

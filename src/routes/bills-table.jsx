@@ -81,8 +81,6 @@ function BillsTable() {
 
   const columns = useMemo(() => COLUMNS, []);
 
-  console.table({ data, errorBills, errorSubscriptionNo });
-
   const table = useReactTable({
     columns,
     data,
@@ -111,8 +109,6 @@ function BillsTable() {
     return <Navigate to="/" replace={true} />;
   }
 
-  console.log(filterBy);
-  console.log(table.getState());
   return (
     <div className="mx-auto w-full max-w-4xl space-y-8" dir="rtl">
       <div>
@@ -278,6 +274,7 @@ function BillsTable() {
                     onClick={onPrevious}
                     size="pagination"
                     variant="outline"
+                    key={key}
                   >
                     <ChevronLeft strokeWidth={1} />
                   </Button>
@@ -303,6 +300,7 @@ function BillsTable() {
                     }
                     size="pagination"
                     variant="ghost"
+                    key={key}
                   >
                     <Ellipsis size={14} />
                   </Button>

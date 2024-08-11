@@ -90,7 +90,6 @@ function BillsTable() {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
-    // onSortingChange: setSorting,
     // onColumnFiltersChange: setColumnFilters,
     state: {
       // sorting,
@@ -237,6 +236,7 @@ function BillsTable() {
             dir={"ltr"}
             total={table.getPageCount()}
             onChange={(page) => table.setPageIndex(page - 1)}
+            page={table.getState().pagination.pageIndex + 1}
             classNames={{
               cursor:
                 "bg-primary min-w-0 w-9 h-9 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
+import { Info, LoaderCircle } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
@@ -24,6 +24,11 @@ import loginFormSchema from "../schema/login-form-schema";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import delay from "../utils/delay";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 // const URL = "http://localhost:3000";
 
 function LoginForm() {
@@ -57,12 +62,34 @@ function LoginForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card className="mx-auto w-full max-w-lg">
-            <CardHeader>
+            <CardHeader className="relative">
               <CardTitle className="mb-2" asChild>
                 <h1 className="text-2xl font-semibold leading-none tracking-tight">
                   تسجيل الدخول
                 </h1>
               </CardTitle>
+              <HoverCard>
+                {/* <HoverCardTrigger className="absolute left-6 top-6" asChild>
+                  <Button
+                    variant={"ghost"}
+                    className="!m-0 grid h-12 w-12 content-center rounded-full "
+                  >
+                    <Info className="text-primary " />
+                  </Button>
+                </HoverCardTrigger> */}
+                <HoverCardTrigger className="absolute left-6 top-6">
+                  <Info className="text-primary " />
+                </HoverCardTrigger>
+                <HoverCardContent
+                  dir="ltr"
+                  className="grid max-w-sm justify-between gap-y-4  p-8 [grid-template-columns:auto_auto]"
+                >
+                  <span className="font-medium tracking-wide">Username</span>
+                  <span className="italic">admin</span>
+                  <span className="font-medium tracking-wide">Password</span>
+                  <span className="italic">admin123</span>
+                </HoverCardContent>
+              </HoverCard>
               <CardDescription>
                 قم بتسجيل الدخول باستخدام معلومات حسابك من سيرياتل
               </CardDescription>

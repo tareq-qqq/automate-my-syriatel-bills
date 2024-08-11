@@ -1,12 +1,12 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
 
 const Card = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "bg-card text-card-foreground rounded-lg border shadow-sm",
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
       className,
     )}
     {...props}
@@ -23,22 +23,27 @@ const CardHeader = React.forwardRef(({ className, ...props }, ref) => (
 ));
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = React.forwardRef(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className,
-    )}
-    {...props}
-  />
-));
+const CardTitle = React.forwardRef(
+  ({ className, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "h3";
+    return (
+      <Comp
+        ref={ref}
+        className={cn(
+          "text-2xl font-semibold leading-none tracking-tight",
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
 CardTitle.displayName = "CardTitle";
 
 const CardDescription = React.forwardRef(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-muted-foreground text-sm", className)}
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ));

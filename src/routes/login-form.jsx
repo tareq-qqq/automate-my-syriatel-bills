@@ -58,7 +58,11 @@ function LoginForm() {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card className="mx-auto w-full max-w-lg">
             <CardHeader>
-              <CardTitle className="mb-2">تسجيل الدخول</CardTitle>
+              <CardTitle className="mb-2" asChild>
+                <h1 className="text-2xl font-semibold leading-none tracking-tight">
+                  تسجيل الدخول
+                </h1>
+              </CardTitle>
               <CardDescription>
                 قم بتسجيل الدخول باستخدام معلومات حسابك من سيرياتل
               </CardDescription>

@@ -54,29 +54,34 @@ function BillsTable() {
   //   [location.state],
   // );
 
-  const data = useMemo(
-    () =>
-      location.state.bills.map((bill) => {
+  const data = useMemo(() => {
+    if (location.state) {
+      return location.state.bills?.map((bill) => {
         if (!bill.amount) {
           return { ...bill, amount: 0 };
         }
         return bill;
-      }),
-    [location.state],
-  );
+      });
+    }
+
+    return [];
+  }, [location.state]);
 
   const errorBills = useMemo(
-    () => location.state?.bills.filter((bill) => bill.error),
+    () =>
+      location.state?.bills
+        ? location.state.bills.filter((bill) => bill.error)
+        : [],
     [location.state],
   );
   const errorSubscriptionNo = useMemo(
-    () => errorBills.map((bill) => bill.subscriptionNo),
+    () => errorBills?.map((bill) => bill.subscriptionNo),
     [errorBills],
   );
 
   const columns = useMemo(() => COLUMNS, []);
 
-  console.log(data);
+  console.table({ data, errorBills, errorSubscriptionNo });
 
   const table = useReactTable({
     columns,
@@ -255,6 +260,7 @@ function BillsTable() {
               if (value === PaginationItemType.NEXT) {
                 return (
                   <Button
+                    key={key}
                     disabled={!table.getCanNextPage()}
                     onClick={onNext}
                     variant="outline"

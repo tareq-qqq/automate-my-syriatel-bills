@@ -23,8 +23,8 @@ import { Input } from "@/components/ui/input";
 import loginFormSchema from "../schema/login-form-schema";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-
-const URL = "http://localhost:3000";
+import delay from "../utils/delay";
+// const URL = "http://localhost:3000";
 
 function LoginForm() {
   const form = useForm({
@@ -39,29 +39,15 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
-  async function onSubmit(data) {
-    try {
-      const res = await fetch(URL, {
-        method: "POST",
-        body: new URLSearchParams(data),
-      });
-
-      const json = await res.json();
-
-      if (res.ok) {
-        // add the cookies and redirect to the root rout
-        console.log("login form: logged in");
-        Cookies.set("userId", json.userId);
-        navigate("/");
-      } else {
-        form.setError("root.serverError", {
-          message: json.message,
-        });
-      }
-    } catch (error) {
+  async function onSubmit({ username, password }) {
+    await delay(1000);
+    Cookies.set("username", username);
+    Cookies.set("password", password);
+    if (username === "admin" && password === "admin123") {
+      navigate("/");
+    } else {
       form.setError("root.serverError", {
-        message:
-          "حدث خطأ ما، غير قادر على الوصول الى السيرفر اعد المحاولة لاحقا",
+        message: "اسم المستخدم أو كلمة المرور غير صحيحة",
       });
     }
   }
